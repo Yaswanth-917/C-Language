@@ -1,36 +1,41 @@
-//Armstrong Using Recursion
 #include <stdio.h>
-int numberSum(int num)
+int digitCount(int num)
 {
-    int sum=0;
-    int temp=num;
     int count=0;
-    while(temp!=0){
-        temp=temp/10;
+    while(num>0)
+    {
+        num=num/10;
         count++;
     }
-    temp=num;
-    while(temp>0){
-        int digit=temp%10;
-        int power=1;
-        for(int i=0;i<count;i++){
-            power=power*digit;
-        }
-        sum=sum+power;
-        temp=temp/10;
-    }
-    return sum;
+    return count;
+}
+int power(int num,int count)
+{
+    if (count<=0)
+        return 1;
+    else
+        return num*power(num,count-1);
+}
+int armStrong(int num, int count)
+{
+    if(num==0)
+        return 0;
+    else
+        return power(num%10,count)+armStrong(num/10,count);
 }
 int main()
 {
-    int num,sum;
-    printf("Enter a number: ");
+    int num,count=0;
     scanf("%d",&num);
-    sum=numberSum(num);
-    if(sum==num){
-        printf("%d is an Armstrong Number",num);
+    count=digitCount(num);
+    printf("Count: %d\n",count);
+    if(armStrong(num,count)==num)
+    {
+        printf("%d is an Armstrong number",num);
     }
-    else{
-        printf("%d is not an Armstrong Number",num);
+    else
+    {
+        printf("%d is not an Armstrong number",num);
     }
 }
+
